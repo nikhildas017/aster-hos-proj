@@ -10,7 +10,7 @@ function Login(){
 
     const handleChange=(e)=>{
         const{name,value}=e.target;
-        setLogin({...login,[name]:value})
+        setLogin({...login,[name]:value}) 
     }
     const handleSubmit=e=>{
         e.preventDefault();
