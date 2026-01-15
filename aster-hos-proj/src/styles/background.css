@@ -1,0 +1,20 @@
+.page-background {
+  width: 95vw; 
+  height: 100vh;
+  background-image: url('../assets/asterhospital.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */ 
+}
+.page-background::before {
+  filter: blur(10px) brightness(0.9);
+}
+
+.glass-card {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(8px);
+}

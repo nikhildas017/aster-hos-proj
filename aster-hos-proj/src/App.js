@@ -2,10 +2,25 @@ import Home from "./Components/Home";
 import Login from "./Components/Login";
 import { Routes, Route } from 'react-router-dom';
 import Layout from "./Components/Layout"; // Import the new Layout
+import "./styles/background.css";
+import { useEffect } from "react";
 
 function App() {
+    useEffect(() => {
+        fetch("http://localhost:8000/api/hello/")
+            .then(response => response.json())
+            .then(data => {
+                console.log("Backend says:", data);
+            })
+            .catch(error => {
+                console.error("Error connecting to backend:", error);
+            });
+    }, []);
+
   return (
     <div className="App">
+      <h1>React Frontend</h1>
+      <p>Open console to see backend response</p>
       <Routes>
         {/* Parent Route with Layout */}
         <Route path="/" element={<Layout />}>
