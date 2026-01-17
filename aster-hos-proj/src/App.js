@@ -19,8 +19,6 @@ function App() {
 
   return (
     <div className="App">
-      <h1>React Frontend</h1>
-      <p>Open console to see backend response</p>
       <Routes>
         {/* Parent Route with Layout */}
         <Route path="/" element={<Layout />}>
