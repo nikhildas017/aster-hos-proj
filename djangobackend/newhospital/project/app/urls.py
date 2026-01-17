@@ -11,6 +11,6 @@ urlpatterns = [
     path('viewadminbook',views.viewadminbook,name="viewadminbook"),
     path('viewcustbook',views.viewcustbook,name="viewcustbook"),
     path('logout',views.logout_view,name="logout"),
-    path('adminpage',views.adminhome,name="adminpage"),
-    path('custpage',views.custhome,name="custpage"),
+    # path('adminpage',views.adminhome,name="adminpage"),
+    # path('custpage',views.custhome,name="custpage"),
 ]

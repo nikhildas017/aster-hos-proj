@@ -44,30 +44,32 @@ function Login() {
 
   return (
     <div className="page-background">
-      <h1>Login Page</h1>
+      <h1 style={{color:"black",fontSize:"50px"}} className="login">LOGIN PAGE</h1><br />
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <form onSubmit={handleSubmit}>
-        <label>Username: </label>
+      <form onSubmit={handleSubmit} className="loginform">
+        {/* <label>Username:</label> */}
         <input
           name="username"
           value={username}
+          placeholder="Your username"
           onChange={handleChange}
         />
         <br /><br />
 
-        <label>Password: </label>
+        {/* <label>Password:</label> */}
         <input
           type="password"
           name="password"
+          placeholder="Your password"
           value={password}
           onChange={handleChange}
         />
         <br /><br />
 
         <Button variant="primary" type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Submit"}
+          {loading ? "Logging in..." : "Log In"}
         </Button>
       </form>
     </div>

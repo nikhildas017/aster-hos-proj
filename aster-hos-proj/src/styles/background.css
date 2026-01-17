@@ -1,5 +1,5 @@
 .page-background {
-  width: 95vw; 
+  width: 100vw; 
   height: 100vh;
   background-image: url('../assets/asterhospital.png');
   background-size: cover;
@@ -10,11 +10,26 @@
   /* align-items: center; */
   /* justify-content: center; */ 
 }
+
 .page-background::before {
-  filter: blur(10px) brightness(0.9);
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  filter: blur(100%) brightness(0.9);
+  z-index: -1;
 }
 
-.glass-card {
+.login{
+  margin-left:110px;
+}
+
+.loginform{
+  margin-left:115px;
+  border:1px solid black;
+}
+
+/* .glass-card {
   background: rgba(255,255,255,0.85);
   backdrop-filter: blur(8px);
-}
+} */
