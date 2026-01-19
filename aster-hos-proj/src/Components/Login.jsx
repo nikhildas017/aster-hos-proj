@@ -1,25 +1,29 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { loginUser } from "../api/auth";
 
 function Login() {
-  const [login, setLogin] = useState({
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Decide if this is login or register
+  const isLogin = location.pathname === "/login";
+
+  const [formData, setFormData] = useState({
     username: "",
     password: "",
+    email: "",
   });
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
-
-  // ✅ destructure values properly
-  const { username, password } = login;
+  const { username, password, email } = formData;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setLogin({ ...login, [name]: value });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -28,50 +32,80 @@ function Login() {
     setLoading(true);
 
     try {
-      const tokens = await loginUser({ username, password });
+      if (isLogin) {
+        // LOGIN
+        const tokens = await loginUser({ username, password });
 
-      // ✅ store tokens (adjust keys if backend differs)
-      localStorage.setItem("access", tokens.access);
-      localStorage.setItem("refresh", tokens.refresh);
+        localStorage.setItem("access", tokens.access);
+        localStorage.setItem("refresh", tokens.refresh);
 
-      navigate("/home");
+        navigate("/home");
+      } else {
+        // REGISTER (placeholder)
+        console.log("Register user:", formData);
+        navigate("/login");
+      }
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="page-background">
-      <h1 style={{color:"black",fontSize:"50px"}} className="login">LOGIN PAGE</h1><br />
+    <div className="modal">
+      <div className="card">
+        {/* Close button */}
+        <span className="close" onClick={() => navigate(-1)}>×</span>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        <h2 className="text-center mb-3">
+          {isLogin ? "Login" : "Register"}
+        </h2>
 
-      <form onSubmit={handleSubmit} className="loginform">
-        {/* <label>Username:</label> */}
-        <input
-          name="username"
-          value={username}
-          placeholder="Your username"
-          onChange={handleChange}
-        />
-        <br /><br />
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
-        {/* <label>Password:</label> */}
-        <input
-          type="password"
-          name="password"
-          placeholder="Your password"
-          value={password}
-          onChange={handleChange}
-        />
-        <br /><br />
+        <form onSubmit={handleSubmit}>
+          {!isLogin && (
+            <>
+              <input
+                name="email"
+                placeholder="Email"
+                value={email}
+                onChange={handleChange}
+              />
+              <br /><br />
+            </>
+          )}
 
-        <Button variant="primary" type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Log In"}
-        </Button>
-      </form>
+          <input
+            name="username"
+            placeholder="Username"
+            value={username}
+            onChange={handleChange}
+          />
+          <br /><br />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={password}
+            onChange={handleChange}
+          />
+          <br /><br />
+
+          <Button
+            variant="primary"
+            type="submit"
+            disabled={loading}
+            className="w-100"
+          >
+            {loading
+              ? isLogin ? "Logging in..." : "Registering..."
+              : isLogin ? "Login" : "Register"}
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }

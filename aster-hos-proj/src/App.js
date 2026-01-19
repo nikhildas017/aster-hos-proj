@@ -8,16 +8,16 @@ import "./styles/background.css";
 import { useEffect } from "react";
 
 function App() {
-    useEffect(() => {
-        fetch("http://localhost:8000/api/hello/")
-            .then(response => response.json())
-            .then(data => {
-                console.log("Backend says:", data);
-            })
-            .catch(error => {
-                console.error("Error connecting to backend:", error);
-            });
-    }, []);
+    // useEffect(() => {
+    //     fetch("http://localhost:8000/api/hello/")
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             console.log("Backend says:", data);
+    //         })
+    //         .catch(error => {
+    //             console.error("Error connecting to backend:", error);
+    //         });
+    // }, []);
 
   return (
     <div className="App">
@@ -26,7 +26,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           {/* Child Routes */}
           <Route index element={<Aster />} /> {/* Matches "/" */}
-          <Route path="login" element={<Login />} />   
+          <Route path="login" element={<Register />} />   
           <Route path="register" element={<Register />} />   
           <Route path="home" element={<Home />} /> {/* Matches "/home" */}
         </Route>
