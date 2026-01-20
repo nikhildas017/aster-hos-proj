@@ -1,6 +1,5 @@
 from django.urls import path,include
 from.import views
-from .views import doctor_api, department_api, book_table_api
 
 urlpatterns = [
     path('',views.index,name="index"),
@@ -14,7 +13,4 @@ urlpatterns = [
     path('logout',views.logout_view,name="logout"),
     # path('adminpage',views.adminhome,name="adminpage"),
     # path('custpage',views.custhome,name="custpage"),
-    path('doctors/', doctor_api),
-    path('departments/', department_api),
-    path('book/', book_table_api),
 ]
