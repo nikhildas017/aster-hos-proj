@@ -65,12 +65,3 @@
   font-size: 22px;
   cursor: pointer;
 }
-
-/* Book appointment page background */
-.book-bg {
-  /* background-image: url('../assets/asterhospital.png'); */
-  background-color: blue;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}

@@ -11,7 +11,7 @@ const Layout = () => {
     location.pathname === "/login" ||
     location.pathname === "/register";
 
-  const userPages = ["/home", "/bookappointment"];
+  const userPages = ["/home", "/bookappointment","/contact"];
 
   return (
     <>

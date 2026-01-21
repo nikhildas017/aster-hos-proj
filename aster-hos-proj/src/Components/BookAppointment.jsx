@@ -52,7 +52,7 @@ const BookAppointment = ({ loggedInUserId }) => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center min-vh-100 book-bg">
+    <div className="book-bg d-flex justify-content-center align-items-center min-vh-100">
       {/* min-vh-100 = full viewport height */}
       <div className="card p-4 shadow" style={{ maxWidth: "500px", width: "100%" }}>
         <h3 className="mb-4 text-center">Book Appointment</h3>

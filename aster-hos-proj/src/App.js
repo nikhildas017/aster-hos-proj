@@ -7,6 +7,7 @@ import Layout from "./Components/Layout"; // Import the new Layout
 import "./styles/background.css";
 import { useEffect } from "react";
 import BookAppointment from "./Components/BookAppointment";
+import Contact from "./Components/Contact";
 
 function App() {
     // useEffect(() => {
@@ -29,8 +30,9 @@ function App() {
           <Route index element={<Aster />} /> {/* Matches "/" */}
           <Route path="login" element={<Login />} />   
           <Route path="register" element={<Register />} />   
-          <Route path="home" element={<Home />} /> {/* Matches "/home" */}
+          <Route path="home" element={<Home />} /> 
           <Route path="bookappointment" element={<BookAppointment loggedInUserId={1} />} />  
+          <Route path="contact" element={<Contact />} />
         </Route>
       </Routes>
     </div>

@@ -1,4 +1,5 @@
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 
 const GuestHeader = () => {
   return (
@@ -9,21 +10,12 @@ const GuestHeader = () => {
         <Navbar.Collapse id="guest-navbar-nav">
           <Nav className="ms-auto align-items-center">
             {/* Login Button */}
-            <Button
-              variant="outline-light"
-              className="ms-3"
-              href="/login"
-            >
-              Login
+            <Button as={Link} to="/login" variant="outline-light" className="ms-3">
+                Login
             </Button>
-
             {/* Sign Up Button */}
-            <Button
-              variant="primary"
-              className="ms-2"
-              href="/register"
-            >
-              Sign Up
+            <Button as={Link} to="/register" variant="primary">
+                Sign Up
             </Button>
           </Nav>
         </Navbar.Collapse>
@@ -31,5 +23,4 @@ const GuestHeader = () => {
     </Navbar>
   );
 };
-
 export default GuestHeader;
