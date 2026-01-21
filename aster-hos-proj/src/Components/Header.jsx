@@ -15,6 +15,15 @@ const Header = () => {
             <Nav.Link href="/patients">Patients</Nav.Link>
             <Nav.Link href="/contact">Contact</Nav.Link>
 
+            {/* Book Appointment Button (Red) */}
+            <Button
+              variant="danger"
+              className="ms-3"
+              href="/bookappointment"
+            >
+              Book Appointment
+            </Button>
+
             {/* Login Button (White) */}
             <Button
               variant="outline-light"

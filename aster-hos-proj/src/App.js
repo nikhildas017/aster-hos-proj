@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 import Layout from "./Components/Layout"; // Import the new Layout
 import "./styles/background.css";
 import { useEffect } from "react";
+import BookAppointment from "./Components/BookAppointment";
 
 function App() {
     // useEffect(() => {
@@ -29,6 +30,7 @@ function App() {
           <Route path="login" element={<Register />} />   
           <Route path="register" element={<Register />} />   
           <Route path="home" element={<Home />} /> {/* Matches "/home" */}
+          <Route path="bookappointment" element={<BookAppointment />} /> 
         </Route>
       </Routes>
     </div>
