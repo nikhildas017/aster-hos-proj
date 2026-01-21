@@ -22,7 +22,12 @@ class RegistrationSerializer(serializers.ModelSerializer):
         model = reg_tbl
         fields = '__all__'
 
+# class BookTableSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = book_tbl
+#         fields = '__all__'
+
 class BookTableSerializer(serializers.ModelSerializer):
     class Meta:
         model = book_tbl
-        fields = '__all__'
+        fields = ['id', 'name', 'email', 'mobile', 'gender', 'district', 'date', 'test', 'doctor', 'user']
