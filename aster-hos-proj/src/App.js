@@ -30,7 +30,7 @@ function App() {
           <Route path="login" element={<Register />} />   
           <Route path="register" element={<Register />} />   
           <Route path="home" element={<Home />} /> {/* Matches "/home" */}
-          <Route path="bookappointment" element={<BookAppointment />} /> 
+          <Route path="bookappointment" element={<BookAppointment loggedInUserId={1} />} />  
         </Route>
       </Routes>
     </div>

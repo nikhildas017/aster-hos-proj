@@ -1,82 +1,59 @@
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Carousel, Card, Row, Col, Container } from "react-bootstrap";
+import axios from "axios";
 
-function Home() {
+const Home = () => {
   const [doctors, setDoctors] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/doctors/")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch doctor data");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setDoctors(data);
-        console.log(doctors);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
+    axios.get("http://127.0.0.1:8000/api/doctors/")
+      .then((res) => setDoctors(res.data))
+      .catch((err) => console.error("Error fetching doctors:", err));
   }, []);
 
-  if (loading) return <p className="text-center">Loading...</p>;
-  if (error) return <p className="text-danger text-center">{error}</p>;
+  // Split doctors into groups of 3 per carousel item
+  const chunkArray = (arr, size) => {
+    const chunks = [];
+    for (let i = 0; i < arr.length; i += size) {
+      chunks.push(arr.slice(i, i + size));
+    }
+    return chunks;
+  };
+
+  const doctorGroups = chunkArray(doctors, 3);
 
   return (
-    <div className="page-background">
-      <h1>Welcome to Home Page</h1>
-      <Link to="/">Go Back</Link>
-
-      <Container className="mt-5 pt-5 mb-5 text-start">
-        <h2 className="text-center mb-4">Our Medical Specialists</h2>
-
-        <Carousel indicators interval={5000} variant="dark">
-          <Carousel.Item>
-            <Row className="justify-content-center">
-              {doctors.map((doc) => (
-                <Col
-                  md={4}
-                  key={doc.id}
-                  className="d-flex justify-content-center"
-                >
-                  <Card
-                    style={{
-                      width: "18rem",
-                      border: "none",
-                      textAlign: "center",
-                    }}
-                  >
-                    <Card.Img
-                      variant="top"
-                      src={doc.img}
-                      className="rounded-circle mx-auto mt-3"
-                      style={{ width: "120px", height: "120px" }}
-                    />
-                    <Card.Body>
-                      <Card.Title>{doc.name}</Card.Title>
-                      <Card.Text className="text-muted">
-                        {doc.specialty}
-                      </Card.Text>
-                      <button className="btn btn-outline-primary btn-sm">
-                        View Profile
-                      </button>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
-          </Carousel.Item>
+    <Container className="mt-5">
+      <h2 className="mb-4 text-center">Our Doctors</h2>
+      {doctors.length > 0 ? (
+        <Carousel>
+          {doctorGroups.map((group, index) => (
+            <Carousel.Item key={index}>
+              <Row>
+                {group.map((doc) => (
+                  <Col md={4} key={doc.id}>
+                    <Card className="mb-3">
+                      <Card.Img
+                        variant="top"
+                        src={`http://127.0.0.1:8000${doc.doctor_img}`}
+                        style={{ height: "200px", objectFit: "cover" }}
+                      />
+                      <Card.Body>
+                        <Card.Title>{doc.doctor_name}</Card.Title>
+                        <Card.Text>{doc.dept_name}</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </Carousel.Item>
+          ))}
         </Carousel>
-      </Container>
-    </div>
+      ) : (
+        <p className="text-center">No doctors available</p>
+      )}
+    </Container>
   );
-}
+};
 
 export default Home;
