@@ -27,7 +27,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           {/* Child Routes */}
           <Route index element={<Aster />} /> {/* Matches "/" */}
-          <Route path="login" element={<Register />} />   
+          <Route path="login" element={<Login />} />   
           <Route path="register" element={<Register />} />   
           <Route path="home" element={<Home />} /> {/* Matches "/home" */}
           <Route path="bookappointment" element={<BookAppointment loggedInUserId={1} />} />  

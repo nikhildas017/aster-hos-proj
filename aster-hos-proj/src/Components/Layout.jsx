@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import Header from './Header';
+import GuestHeader from './GuestHeader';
+import UserHeader from './UserHeader';
 import Footer from './Footer';
-import Login from "./Login";
 import "../styles/background.css";
 
 const Layout = () => {
@@ -11,11 +11,16 @@ const Layout = () => {
     location.pathname === "/login" ||
     location.pathname === "/register";
 
+  const userPages = ["/home", "/bookappointment"];
+
   return (
     <>
-      {/* Background */}
       <div className={`d-flex flex-column min-vh-100 ${isModalOpen ? "blur" : ""}`}>
-        <Header />
+
+        {/* Show UserHeader only on Home page, else GuestHeader */}
+        {/* {location.pathname === "/home" ? <UserHeader /> : <GuestHeader />} */}
+        
+        {userPages.includes(location.pathname) ? <UserHeader /> : <GuestHeader />}
 
         <main className="flex-grow-1 container mt-5 pt-4">
           <Outlet />

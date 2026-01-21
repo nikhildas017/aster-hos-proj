@@ -1,32 +1,31 @@
 import { useState, useEffect } from "react";
 import { getDoctors, bookAppointment } from "../api/book";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "../styles/background.css"; // we'll define background here
 
 const BookAppointment = ({ loggedInUserId }) => {
-  const [doctors, setDoctors] = useState([]);  // list of doctors
-  const [name, setName] = useState("");        // patient name
-  const [email, setEmail] = useState("");      // patient email
-  const [mobile, setMobile] = useState("");    // patient mobile
-  const [gender, setGender] = useState("");    // patient gender
-  const [district, setDistrict] = useState(""); // patient district
-  const [date, setDate] = useState("");        // appointment date
-  const [test, setTest] = useState("");        // test name
-  const [selectedDoctor, setSelectedDoctor] = useState(""); // doctor ID
+  const [doctors, setDoctors] = useState([]);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [gender, setGender] = useState("");
+  const [district, setDistrict] = useState("");
+  const [date, setDate] = useState("");
+  const [test, setTest] = useState("");
+  const [selectedDoctor, setSelectedDoctor] = useState("");
 
-    useEffect(() => {
-      getDoctors()
-        .then((res) => setDoctors(res.data))  // save doctors list in state
-        .catch((err) => console.error("Error fetching doctors:", err));
-    }, []);
+  useEffect(() => {
+    getDoctors()
+      .then((res) => setDoctors(res.data))
+      .catch((err) => console.error("Error fetching doctors:", err));
+  }, []);
 
-    const handleSubmit = () => {
-    // Validate required fields
+  const handleSubmit = () => {
     if (!name || !email || !mobile || !gender || !district || !date || !test || !selectedDoctor) {
       alert("Please fill all fields");
       return;
     }
 
-    // Prepare data for POST
     const data = {
       name,
       email,
@@ -35,15 +34,13 @@ const BookAppointment = ({ loggedInUserId }) => {
       district,
       date,
       test,
-      doctor: selectedDoctor,  // doctor ID
-      user: loggedInUserId      // user ID from login
+      doctor: selectedDoctor,
+      user: loggedInUserId
     };
 
-    // Send data to backend
     bookAppointment(data)
       .then(() => {
         alert("Appointment booked successfully!");
-        // Reset form
         setName(""); setEmail(""); setMobile("");
         setGender(""); setDistrict(""); setDate("");
         setTest(""); setSelectedDoctor("");
@@ -55,8 +52,9 @@ const BookAppointment = ({ loggedInUserId }) => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="card p-4">
+    <div className="d-flex justify-content-center align-items-center min-vh-100 book-bg">
+      {/* min-vh-100 = full viewport height */}
+      <div className="card p-4 shadow" style={{ maxWidth: "500px", width: "100%" }}>
         <h3 className="mb-4 text-center">Book Appointment</h3>
 
         {/* Patient Name */}
@@ -158,11 +156,12 @@ const BookAppointment = ({ loggedInUserId }) => {
         </div>
 
         {/* Submit Button */}
-        <button className="btn btn-primary" onClick={handleSubmit}>
+        <button className="btn btn-primary w-100" onClick={handleSubmit}>
           Book Appointment
         </button>
       </div>
     </div>
   );
 };
+
 export default BookAppointment;
