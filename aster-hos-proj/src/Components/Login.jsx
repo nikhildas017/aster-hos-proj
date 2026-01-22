@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { loginUser } from "../api/auth";
@@ -7,8 +7,8 @@ function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Decide if this is login or register
-  const isLogin = location.pathname === "/login";
+  // ✅ isLogin is now a STATE variable
+  const [isLogin, setIsLogin] = useState(true);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -20,6 +20,15 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   const { username, password, email } = formData;
+
+  // ✅ Update isLogin when URL changes
+  useEffect(() => {
+    if (location.pathname === "/login") {
+      setIsLogin(true);
+    } else if (location.pathname === "/register") {
+      setIsLogin(false);
+    }
+  }, [location.pathname]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,7 +73,9 @@ function Login() {
 
         {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <form onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
+
+          {/* Email only for REGISTER */}
           {!isLogin && (
             <>
               <input
@@ -109,5 +120,4 @@ function Login() {
     </div>
   );
 }
-
 export default Login;
