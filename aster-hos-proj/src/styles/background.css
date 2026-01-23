@@ -34,7 +34,7 @@
   pointer-events: none;
 }
 
-.modal {
+/* .modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -47,7 +47,7 @@
   z-index: 2000;
   inset:0;
   backdrop-filter: blur(6px);
-}
+} */
 
 .card {
   background: white;
@@ -64,9 +64,9 @@
   right: 15px;
   font-size: 22px;
   cursor: pointer;
+  z-index: 1;
 }
-
+  
 .form{
   border:1px solid black;
-  
 }
