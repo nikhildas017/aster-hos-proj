@@ -5,7 +5,9 @@ const DoctorSelect = ({ doctors, selectedDoctor, setSelectedDoctor }) => {
       <select
         className="form-select"
         value={selectedDoctor}
-        onChange={(e) => setSelectedDoctor(e.target.value)}
+        // onChange={(e) => setSelectedDoctor(e.target.value)}
+        onChange={(e) => setSelectedDoctor(Number(e.target.value))}
+
       >
         <option value="">-- Choose Doctor --</option>
         {doctors.map((doctor) => (

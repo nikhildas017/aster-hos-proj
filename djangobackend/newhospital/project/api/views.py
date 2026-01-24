@@ -39,7 +39,7 @@ def hello_api(request):
 
 @api_view(['GET'])
 def doctor_api(request):
-    doctors = Doctor_tbl.objects.all()
+    doctors = Doctor_tbl.objects.select_related('dept_name').all()
     serializer = DoctorSerializer(doctors, many=True)
     return Response(serializer.data)
     
@@ -48,20 +48,6 @@ def department_api(request):
     departments = Dept_tbl.objects.all()
     serializer = DepartmentSerializer(departments, many=True)
     return Response(serializer.data)
-
-# @api_view(['POST', 'GET'])
-# def book_table_api(request):
-#     if request.method == 'GET':
-#         bookings = book_tbl.objects.all()
-#         serializer = BookTableSerializer(bookings, many=True)
-#         return Response(serializer.data)
-
-#     elif request.method == 'POST':
-#         serializer = BookTableSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(['GET', 'POST'])
 def book_table_api(request):
@@ -70,10 +56,11 @@ def book_table_api(request):
         serializer = BookTableSerializer(bookings, many=True)
         return Response(serializer.data)
 
-    elif request.method == 'POST':
-        # For POST, ensure doctor & user are IDs
-        serializer = BookTableSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    serializer = BookTableSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(
+            {"message": "Appointment booked successfully"},
+            status=status.HTTP_201_CREATED
+        )
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
