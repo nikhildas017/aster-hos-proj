@@ -1,18 +1,14 @@
 import { useState, useEffect } from "react";
 import { getDoctors, bookAppointment } from "../api/book";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import "../styles/background.css"; // we'll define background here
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/background.css";
 
 const BookAppointment = ({ loggedInUserId }) => {
   const [doctors, setDoctors] = useState([]);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [gender, setGender] = useState("");
-  const [district, setDistrict] = useState("");
   const [date, setDate] = useState("");
   const [test, setTest] = useState("");
   const [selectedDoctor, setSelectedDoctor] = useState("");
+  const [notes, setNotes] = useState(""); // optional but useful
 
   useEffect(() => {
     getDoctors()
@@ -21,29 +17,26 @@ const BookAppointment = ({ loggedInUserId }) => {
   }, []);
 
   const handleSubmit = () => {
-    if (!name || !email || !mobile || !gender || !district || !date || !test || !selectedDoctor) {
-      alert("Please fill all fields");
+    if (!date || !test || !selectedDoctor) {
+      alert("Please fill all required fields");
       return;
     }
 
     const data = {
-      name,
-      email,
-      mobile,
-      gender,
-      district,
       date,
       test,
       doctor: selectedDoctor,
-      user: loggedInUserId
+      notes,
+      user: loggedInUserId, // backend links appointment to logged-in user
     };
 
     bookAppointment(data)
       .then(() => {
         alert("Appointment booked successfully!");
-        setName(""); setEmail(""); setMobile("");
-        setGender(""); setDistrict(""); setDate("");
-        setTest(""); setSelectedDoctor("");
+        setDate("");
+        setTest("");
+        setSelectedDoctor("");
+        setNotes("");
       })
       .catch((err) => {
         console.error("Error booking appointment:", err);
@@ -53,72 +46,12 @@ const BookAppointment = ({ loggedInUserId }) => {
 
   return (
     <div className="book-bg d-flex justify-content-center align-items-center min-vh-100">
-      {/* min-vh-100 = full viewport height */}
       <div className="card p-4 shadow" style={{ maxWidth: "500px", width: "100%" }}>
         <h3 className="mb-4 text-center">Book Appointment</h3>
 
-        {/* Patient Name */}
-        <div className="mb-3">
-          <label className="form-label">Name</label>
-          <input
-            type="text"
-            className="form-control"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-
-        {/* Email */}
-        <div className="mb-3">
-          <label className="form-label">Email</label>
-          <input
-            type="email"
-            className="form-control"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-
-        {/* Mobile */}
-        <div className="mb-3">
-          <label className="form-label">Mobile</label>
-          <input
-            type="text"
-            className="form-control"
-            value={mobile}
-            onChange={(e) => setMobile(e.target.value)}
-          />
-        </div>
-
-        {/* Gender */}
-        <div className="mb-3">
-          <label className="form-label">Gender</label>
-          <select
-            className="form-select"
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
-          >
-            <option value="">--Select Gender--</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-
-        {/* District */}
-        <div className="mb-3">
-          <label className="form-label">District</label>
-          <input
-            type="text"
-            className="form-control"
-            value={district}
-            onChange={(e) => setDistrict(e.target.value)}
-          />
-        </div>
-
         {/* Appointment Date */}
         <div className="mb-3">
-          <label className="form-label">Date</label>
+          <label className="form-label">Appointment Date</label>
           <input
             type="date"
             className="form-control"
@@ -129,12 +62,13 @@ const BookAppointment = ({ loggedInUserId }) => {
 
         {/* Test */}
         <div className="mb-3">
-          <label className="form-label">Test</label>
+          <label className="form-label">Test / Reason for Visit</label>
           <input
             type="text"
             className="form-control"
             value={test}
             onChange={(e) => setTest(e.target.value)}
+            placeholder="e.g. Blood Test, Fever, Consultation"
           />
         </div>
 
@@ -153,6 +87,18 @@ const BookAppointment = ({ loggedInUserId }) => {
               </option>
             ))}
           </select>
+        </div>
+
+        {/* Optional Notes */}
+        <div className="mb-3">
+          <label className="form-label">Additional Notes (optional)</label>
+          <textarea
+            className="form-control"
+            rows="3"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder="Any symptoms or additional information"
+          />
         </div>
 
         {/* Submit Button */}

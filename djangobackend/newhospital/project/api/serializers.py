@@ -23,8 +23,8 @@ class DoctorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Doctor_tbl
-        fields = ['id', 'doctor_name', 'doctor_img']
-        # add 'dept_name' later
+        fields = ['id', 'doctor_name', 'doctor_img', 'dept_name',]
+       
 
 class RegistrationSerializer(serializers.ModelSerializer):
     class Meta:
