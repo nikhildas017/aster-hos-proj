@@ -31,29 +31,12 @@ class reg_tbl(models.Model):
     def __str__(self):
         return self.name
     
-# class book_tbl(models.Model):
-#     name=models.CharField(max_length=50)
-#     email=models.EmailField()
-#     mobile=models.IntegerField()
-#     gender=models.CharField(max_length=50)
-#     district=models.CharField(max_length=50)
-#     date=models.DateField()
-#     test=models.CharField()
-#     doctor_name=models.CharField(max_length=50)
-#     user=models.ForeignKey(reg_tbl,on_delete=models.CASCADE)
-#     def __str__(self):
-#         return self.name
-
 class book_tbl(models.Model):
-    name = models.CharField(max_length=50)
-    email = models.EmailField()
-    mobile = models.CharField(max_length=15)  # safer than IntegerField
-    gender = models.CharField(max_length=10)
-    district = models.CharField(max_length=50)
-    date = models.DateField()
-    test = models.CharField(max_length=100)  # must add max_length
-    doctor = models.ForeignKey(Doctor_tbl, on_delete=models.CASCADE)  # link to doctor
     user = models.ForeignKey(reg_tbl, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor_tbl, on_delete=models.CASCADE)
+    date = models.DateField()
+    test = models.CharField(max_length=100)
+    notes = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.name} - {self.doctor.doctor_name}"
+        return f"{self.user.name} - {self.date}"
