@@ -24,18 +24,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         model = reg_tbl
         fields = '__all__'
     
-# class BookTableSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = book_tbl
-#         fields = ['id', 'date', 'test', 'doctor', 'notes']
-
 class BookTableSerializer(serializers.ModelSerializer):
     class Meta:
         model = book_tbl
-        fields = ['id', 'date', 'test', 'doctor', 'user']  # keep only the fields you want to accept
-
-    def create(self, validated_data):
-        # Pop the user out of validated_data
-        user = validated_data.pop('user')
-        # Now create the booking with the user properly assigned
-        return book_tbl.objects.create(user=user, **validated_data)
+        fields = ['id', 'date', 'test', 'doctor', 'notes']

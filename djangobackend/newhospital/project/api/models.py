@@ -21,18 +21,22 @@ class Doctor_tbl(models.Model):
     def __str__(self):
         return self.doctor_name
     
+
 class reg_tbl(models.Model):
-    name=models.CharField(max_length=50)
-    mobile=models.IntegerField()
-    email=models.EmailField()
-    password=models.CharField(max_length=50)
-    cnpass=models.CharField(max_length=50)
-    user=models.CharField(max_length=50)
+    ROLE_CHOICES = (
+        ('patient', 'Patient'),
+        ('admin', 'Admin'),
+    )
+    name = models.CharField(max_length=50)
+    mobile = models.CharField(max_length=15)  # use CharField for phone numbers
+    email = models.EmailField(unique=True)    # unique emails for login
+    password = models.CharField(max_length=128)  # can store hashed passwords
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='patient')
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.role})"
     
 class book_tbl(models.Model):
-    # user = models.ForeignKey(reg_tbl, on_delete=models.CASCADE)
+    user = models.ForeignKey(reg_tbl, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor_tbl, on_delete=models.CASCADE)
     date = models.DateField()
     test = models.CharField(max_length=100)
