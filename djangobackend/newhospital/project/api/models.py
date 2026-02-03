@@ -32,7 +32,7 @@ class reg_tbl(models.Model):
         return self.name
     
 class book_tbl(models.Model):
-    user = models.ForeignKey(reg_tbl, on_delete=models.CASCADE)
+    # user = models.ForeignKey(reg_tbl, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor_tbl, on_delete=models.CASCADE)
     date = models.DateField()
     test = models.CharField(max_length=100)
