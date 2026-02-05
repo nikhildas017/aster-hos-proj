@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Card from "react-bootstrap/Card";
 import { loginUser } from "../api/auth";
 
 function Login() {
@@ -28,10 +30,8 @@ function Login() {
 
     try {
       const tokens = await loginUser({ username, password });
-
       localStorage.setItem("access", tokens.access);
       localStorage.setItem("refresh", tokens.refresh);
-
       navigate("/home");
     } catch (err) {
       setError(err.message || "Invalid username or password");
@@ -41,45 +41,79 @@ function Login() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
-      <div className="page-background position-relative p-4">
-        {/* Close button */}
-        <span className="close" onClick={() => navigate(-1)}>×</span>
+    <div
+      className="d-flex justify-content-center"
+      style={{ minHeight: "100vh", paddingTop: "90px" }}
+    >
+      <Card
+        className="position-relative"
+        style={{
+          width: "320px",
+          padding: "20px",
+          border: "1px solid #ddd",
+          borderRadius: "12px",
+          backgroundColor: "#fff",
+        }}
+      >
+        {/* Close Button */}
+        <span
+          className="close"
+          onClick={() => navigate(-1)}
+          style={{
+            position: "absolute",
+            top: "10px",
+            right: "14px",
+            cursor: "pointer",
+            fontSize: "20px",
+            color: "#666",
+          }}
+        >
+          ×
+        </span>
 
-        <h2 className="text-center mb-3">Login</h2>
+        <h4 className="text-center mb-3">Login</h4>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-2">
+            <Form.Control
+              size="sm"
+              name="username"
+              placeholder="Username"
+              value={username}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
 
-        <form className="form" onSubmit={handleSubmit}>
-          <input
-            name="username"
-            placeholder="Username"
-            value={username}
-            onChange={handleChange}
-            required
-          />
-          <br /><br />
+          <Form.Group className="mb-3">
+            <Form.Control
+              size="sm"
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={password}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={password}
-            onChange={handleChange}
-            required
-          />
-          <br /><br />
+          {error && (
+            <div className="text-danger text-center mb-2" style={{ fontSize: "0.85rem" }}>
+              {error}
+            </div>
+          )}
 
           <Button
             variant="primary"
             type="submit"
             disabled={loading}
-            style={{ width: "185px" }}
+            size="sm"
+            className="w-100"
           >
             {loading ? "Logging in..." : "Login"}
           </Button>
-        </form>
-      </div>
+        </Form>
+      </Card>
     </div>
   );
 }

@@ -1,35 +1,31 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import GuestHeader from './GuestHeader';
-import UserHeader from './UserHeader';
-import Footer from './Footer';
+import Header from "./Header";
+import Footer from "./Footer";
 import "../styles/background.css";
 
 const Layout = () => {
   const location = useLocation();
 
+  // Blur background when login/register modal pages are open
   const isModalOpen =
     location.pathname === "/login" ||
     location.pathname === "/register";
 
-  const userPages = ["/home", "/bookappointment","/contact"];
-
   return (
-    <>
-      <div className={`d-flex flex-column min-vh-100 ${isModalOpen ? "blur" : ""}`}>
+    <div className={`d-flex flex-column min-vh-100 ${isModalOpen ? "blur" : ""}`}>
+      
+      {/* Single Header – handles guest / user logic internally */}
+      <Header />
 
-        {/* Show UserHeader only on Home page, else GuestHeader */}
-        {/* {location.pathname === "/home" ? <UserHeader /> : <GuestHeader />} */}
-        
-        {userPages.includes(location.pathname) ? <UserHeader /> : <GuestHeader />}
+      {/* Main content */}
+      <main className="flex-grow-1 container mt-5 pt-4">
+        <Outlet />
+      </main>
 
-        <main className="flex-grow-1 container mt-5 pt-4">
-          <Outlet />
-        </main>
+      {/* Footer */}
+      <Footer />
 
-        <Footer />
-      </div>
-    </>
+    </div>
   );
 };
-
 export default Layout;

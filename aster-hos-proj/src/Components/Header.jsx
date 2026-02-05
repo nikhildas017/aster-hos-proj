@@ -1,46 +1,95 @@
-import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role"); // "admin", "doctor", "user"
+
+  const isLoggedIn = !!token;
+  const isAdminOrDoctor = role === "admin" || role === "doctor";
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
       <Container>
-        <Navbar.Brand href="/">Aster Hospital</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">
+          Aster Hospital
+        </Navbar.Brand>
 
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-
-        <Navbar.Collapse id="basic-navbar-nav">
-          {/* Left / middle navigation links */}
+        <Navbar.Toggle aria-controls="main-navbar" />
+        <Navbar.Collapse id="main-navbar">
           <Nav className="ms-auto align-items-center">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/patients">Patients</Nav.Link>
-            <Nav.Link href="/contact">Contact</Nav.Link>
 
-            {/* Book Appointment Button (Red) */}
-            <Button
-              variant="danger"
-              className="ms-3"
-              href="/bookappointment"
-            >
-              Book Appointment
-            </Button>
+            {/* Always visible */}
+            <Nav.Link as={Link} to="/contact">
+              Contact
+            </Nav.Link>
 
-            {/* Login Button (White) */}
-            <Button
-              variant="outline-light"
-              className="ms-3"
-              href="/login"
-            >
-              Login
-            </Button>
+            {/* Logged-in users */}
+            {isLoggedIn && (
+              <>
+                <Button
+                  as={Link}
+                  to="/bookappointment"
+                  variant="danger"
+                  className="ms-3"
+                >
+                  Book Appointment
+                </Button>
+              </>
+            )}
 
-            {/* Sign Up Button (Blue) */}
-            <Button
-              variant="primary"
-              className="ms-2"
-              href="/register"
-            >
-              Sign Up
-            </Button>
+            {/* Admin / Doctor only */}
+            {isLoggedIn && isAdminOrDoctor && (
+              <>
+                <Nav.Link as={Link} to="/home" className="ms-3">
+                  Home
+                </Nav.Link>
+                <Nav.Link as={Link} to="/patients" className="ms-3">
+                  Patients
+                </Nav.Link>
+              </>
+            )}
+
+            {/* Guest */}
+            {!isLoggedIn && (
+              <>
+                <Button
+                  as={Link}
+                  to="/login"
+                  variant="outline-light"
+                  className="ms-3"
+                >
+                  Login
+                </Button>
+                <Button
+                  as={Link}
+                  to="/register"
+                  variant="primary"
+                  className="ms-2"
+                >
+                  Sign Up
+                </Button>
+              </>
+            )}
+
+            {/* Logout */}
+            {isLoggedIn && (
+              <Button
+                variant="outline-light"
+                className="ms-3"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            )}
+
           </Nav>
         </Navbar.Collapse>
       </Container>
