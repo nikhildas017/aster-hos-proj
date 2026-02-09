@@ -48,10 +48,10 @@ function Login() {
       <Card
         className="position-relative"
         style={{
-          width: "320px",
-          padding: "20px",
+          width: "280px",
+          padding: "12px 14px 8px 14px",
           border: "1px solid #ddd",
-          borderRadius: "12px",
+          borderRadius: "10px",
           backgroundColor: "#fff",
         }}
       >
@@ -74,7 +74,7 @@ function Login() {
         <h4 className="text-center mb-3">Login</h4>
 
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-2">
+          <Form.Group className="mb-1">
             <Form.Control
               size="sm"
               name="username"
@@ -85,7 +85,7 @@ function Login() {
             />
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-2">
             <Form.Control
               size="sm"
               type="password"

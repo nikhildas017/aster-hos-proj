@@ -29,11 +29,11 @@ function Register() {
 
   return (
     <div
-      className="d-flex justify-content-center align-items-center"
+      className="d-flex justify-content-center align-items-start min-vh-100 pt-5"
       style={{ minHeight: "100vh" }}
     >
       <div className="page-background position-relative">
-        <Card className="p-3" style={{ width: "26rem" }}>
+        <Card className="p-3" style={{ width: "26rem", marginTop: "-200px"}}>
           
           {/* Close Button */}
           <span

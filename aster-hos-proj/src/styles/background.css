@@ -72,3 +72,11 @@ input, button {
   z-index: 11;  /* above overlay */
   pointer-events: auto; /* enable clicks */
 }
+
+.contact-bg {
+  background: linear-gradient(to bottom right, #eaf6ff, #f7fbff);
+}
+
+.map-container iframe {
+  border-radius: 8px;
+}

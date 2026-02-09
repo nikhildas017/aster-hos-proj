@@ -4,10 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate();
 
-  const token = localStorage.getItem("token");
+  // FIXED: CHECK THE ACTUAL STORED TOKENS
+  const accessToken = localStorage.getItem("access");
   const role = localStorage.getItem("role"); // "admin", "doctor", "user"
 
-  const isLoggedIn = !!token;
+  const isLoggedIn = !!accessToken;
   const isAdminOrDoctor = role === "admin" || role === "doctor";
 
   const handleLogout = () => {
@@ -33,16 +34,15 @@ const Header = () => {
 
             {/* Logged-in users */}
             {isLoggedIn && (
-              <>
-                <Button
-                  as={Link}
-                  to="/bookappointment"
-                  variant="danger"
-                  className="ms-3"
-                >
-                  Book Appointment
-                </Button>
-              </>
+              <Button
+                as={Link}
+                to="/bookappointment"
+                variant="danger"
+                className="ms-3"
+                style={{ whiteSpace: "nowrap" }} // THIS PREVENTS WRAPPING
+              >
+                Book Appointment
+              </Button>
             )}
 
             {/* Admin / Doctor only */}
